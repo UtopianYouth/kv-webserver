@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kv存储演示</title>
+    <link rel="icon" type="image/jpeg" href="imgs/boost.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 顶部导航菜单 -->
+    <nav class="top-nav">
+        <div class="nav-dropdown">
+            <span class="nav-title">使用指南</span>
+            <div class="dropdown-content">
+                <a href="#" class="dropdown-item" onclick="showCommandHelp(); return false;">查看命令</a>
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <span class="nav-title">关于</span>
+            <div class="dropdown-content">
+                <a href="#" class="dropdown-item" onclick="showProjectInfo(); return false;">项目介绍</a>
+                <a href="#" class="dropdown-item" onclick="viewResume(); return false;">联系作者</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 标题在左上角 -->
+    <h1 class="main-title">
+        <img src="imgs/boost.jpg" alt="logo" class="title-logo">
+        基于Reactor网络模型的KV存储系统演示
+    </h1>
+
+    <div class="container">
+        <!-- 主内容区域：包含存储统计、输入框和提示 -->
+        <div class="main-content">
+            <!-- 存储引擎统计信息 -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <h3>Array 存储</h3>
+                    <div class="stat-info">
+                        <p>已存储: <span id="array-count">0</span> 个</p>
+                        <p>剩余: <span id="array-remaining">1000</span> 个</p>
+                        <div class="progress-bar">
+                            <div id="array-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Hash 存储</h3>
+                    <div class="stat-info">
+                        <p>已存储: <span id="hash-count">0</span> 个</p>
+                        <p>剩余: <span id="hash-remaining">1000</span> 个</p>
+                        <div class="progress-bar">
+                            <div id="hash-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>RBTree 存储</h3>
+                    <div class="stat-info">
+                        <p>已存储: <span id="rbtree-count">0</span> 个</p>
+                        <p>剩余: <span id="rbtree-remaining">1000</span> 个</p>
+                        <div class="progress-bar">
+                            <div id="rbtree-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 刷新按钮和帮助按钮 -->
+            <div class="refresh-btn-container">
+                <button id="refresh-btn" class="icon-btn" onclick="loadStats()" title="刷新统计信息">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    </svg>
+                </button>
+                <button id="help-btn" class="icon-btn" onclick="toggleHelp()" title="查看支持的命令">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 命令输入区域 -->
+            <div class="command-section">
+                <div class="input-wrapper">
+                    <input type="text" id="command-input" placeholder="支持命令: SET/GET/DEL/MOD/EXIST等，可点击上方按钮查看所有可支持命令"
+                        autocomplete="off" />
+                    <button id="submit-btn" onclick="submitCommand()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- 响应显示区域 -->
+                <div id="response-area" class="response-area"></div>
+            </div>
+        </div>
+
+        <!-- 历史记录单独组件 -->
+        <div class="history-section">
+            <h2>当前操作历史</h2>
+            <div id="history-list" class="history-list"></div>
+        </div>
+    </div>
+
+    <!-- 帮助弹窗 -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>KV存储引擎支持的命令</h2>
+                <button class="close-btn" onclick="toggleHelp()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>基于Array实现的KV存储</h3>
+                <pre><code>SET key value        # 添加键值对
+GET key              # 获取对应键值对的值
+DEL key              # 删除键值对
+MOD key newvalue     # 修改指定键的值
+EXIST key            # 判断键是否存在</code></pre>
+
+                <h3>基于Hash实现的KV存储</h3>
+                <pre><code>HSET key value       # 添加键值对
+HGET key             # 获取对应键值对的值
+HDEL key             # 删除键值对
+HMOD key newvalue    # 修改指定键的值
+HEXIST key           # 判断键是否存在</code></pre>
+
+                <h3>基于RBTree实现的KV存储</h3>
+                <pre><code>RSET key value       # 添加键值对
+RGET key             # 获取对应键值对的值
+RDEL key             # 删除键值对
+RMOD key newvalue    # 修改指定键的值
+REXIST key           # 判断键是否存在</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- 项目介绍弹窗 -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>项目介绍</h2>
+                <button class="close-btn" onclick="toggleProjectInfo()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>项目概述</h3>
+                <p>这是一个基于Reactor网络模型的高性能KV存储系统，采用C++实现，支持多种数据结构的存储引擎。</p>
+
+                <h3>技术特点</h3>
+                <ul>
+                    <li><strong>Reactor网络模型</strong>：采用epoll实现高并发网络通信</li>
+                    <li><strong>多线程池</strong>：异步处理客户端请求，提升并发性能</li>
+                    <li><strong>定时器机制</strong>：管理超时连接，优化资源使用</li>
+                    <li><strong>HTTP协议</strong>：支持标准HTTP/1.1协议通信</li>
+                    <li><strong>多种存储引擎</strong>：提供Array、Hash、RBTree三种存储实现</li>
+                </ul>
+
+                <h3>存储引擎</h3>
+                <ul>
+                    <li><strong>Array存储</strong>：基于数组实现，适合顺序访问</li>
+                    <li><strong>Hash存储</strong>：基于哈希表，快速查找O(1)</li>
+                    <li><strong>RBTree存储</strong>：基于红黑树，有序存储O(log n)</li>
+                </ul>
+
+                <h3>系统架构</h3>
+                <p>采用前后端分离架构，前端使用纯JavaScript实现，后端基于C++高性能服务器，通过RESTful API通信。</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

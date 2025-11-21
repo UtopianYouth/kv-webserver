@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作者简历</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 80px;
+            height: auto;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 1em;
+            flex-wrap: wrap;
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #667eea;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .education-item,
+        .experience-item,
+        .project-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .education-item:last-child,
+        .experience-item:last-child,
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .item-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .item-subtitle {
+            color: #666;
+            font-size: 1em;
+            margin-left: 15px;
+        }
+
+        .item-date {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .item-content {
+            color: #555;
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+
+        .item-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .item-content ul li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .item-content ul li::before {
+            content: '●';
+            color: #667eea;
+            position: absolute;
+            left: 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .skill-item {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .skill-item::before {
+            content: '●';
+            color: #667eea;
+            position: absolute;
+            left: 8px;
+            top: 10px;
+        }
+
+        .project-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .contact-info {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .item-subtitle {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-container">
+        <div class="header">
+            <h1>UtopianYouth</h1>
+            <div class="contact-info">
+                <span>GitHub: https://github.com/UtopianYouth</span>
+                <span>Email: heqing2023@email.szu.edu.cn</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 教育经历 -->
+            <div class="section">
+                <h2 class="section-title">教育经历</h2>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">深圳大学</span>
+                            <span class="item-subtitle">硕士 · 计算机技术</span>
+                        </div>
+                        <span class="item-date">2023.09-2026.07</span>
+                    </div>
+                    <div class="item-content">
+                        <strong>主修课程：</strong>机器学习、算法设计与分析、系统软件原理与实践、无线网络技术、计算机前沿技术、脑与认知科学。
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">湖南工业大学</span>
+                            <span class="item-subtitle">本科 · 计算机科学与技术</span>
+                        </div>
+                        <span class="item-date">2019.09-2023.07</span>
+                    </div>
+                    <div class="item-content">
+                        <strong>主修课程：</strong>数据结构、计算机组成原理、操作系统、计算机网络、数据库概论、面向对象编程、软件工程、软件测试。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 实习经历 -->
+            <div class="section">
+                <h2 class="section-title">实习经历</h2>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">深圳市智物联网络有限公司</span>
+                            <span class="item-subtitle">后端开发工程师</span>
+                        </div>
+                        <span class="item-date">2025.07-2025.09</span>
+                    </div>
+                    <div class="item-content">
+                        <ul>
+                            <li><strong>负责API分组与信息管理模块的开发测试：</strong>实现API分组管理和API信息管理，优化API分组管理的多叉树生成算法，处理父子节点关系；使用Apipost完成接口测试，为Yunuis平台提供API层级管理能力；
+                            </li>
+                            <li><strong>研究与实现微服务架构下的HTTP请求转发：</strong>基于开源工具Consul实现微服务的注册与发现，获取所有微服务的Action列表到Yunuis网关层常驻内存，实现精准路由至对应微服务执行业务逻辑；
+                            </li>
+                            <li><strong>设计并实现多类型Action的请求分发与执行机制：</strong>基于工作一和二，通过哈希表缓存内部、系统、用户自定义的Action列表；内部Action利用Go反射机制，查找并执行对应结构体方法；系统Action复用已开发的微服务HTTP转发器进行路由；用户自定义Action调用Mixgo框架的Lua脚本引擎执行用户自定义逻辑。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目经历 -->
+            <div class="section">
+                <h2 class="section-title">项目经历</h2>
+
+                <div class="project-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">基于轻量级Web服务器的KV存储演示系统</span>
+                            <span class="item-subtitle">全栈开发</span>
+                        </div>
+                        <span class="item-date">2024.07-2024.11</span>
+                    </div>
+                    <div class="item-content">
+                        <p><strong>项目描述：</strong>基于Reactor网络模型+线程池架构的高性能KV存储演示系统，实现了支持Web界面交互的键值存储服务；系统采用前后端分离架构，后端使用C++实现HTTP服务器和三种KV存储引擎（Array/Hash/RBTree），前端提供实时统计和命令操作界面；通过RESTful API进行数据交互，支持Docker容器化部署，测试性能达到10K-15K QPS。
+                        </p>
+                        <p><strong>源代码：</strong><a href="https://github.com/UtopianYouth/kv-webserver" target="_blank"
+                                class="project-link">https://github.com/UtopianYouth/kv-webserver</a></p>
+                        <ul>
+                            <li><strong>Reactor网络模型：</strong>主线程使用epoll边缘触发模式监听客户端连接和数据，工作线程池处理HTTP请求和KV命令，实现高并发网络通信；</li>
+                            <li><strong>HTTP解析与响应：</strong>采用主从状态机配合解析HTTP协议，支持GET/POST方法，实现静态文件服务和RESTful API接口；</li>
+                            <li><strong>多引擎KV存储：</strong>实现Array（顺序查找O(n)）、Hash（链地址法O(1)）、RBTree（红黑树O(log n)）三种存储引擎，满足不同场景需求；</li>
+                            <li><strong>线程安全设计：</strong>为每个KV引擎配备独立读写锁（std::shared_mutex），读操作使用共享锁并发执行，写操作使用独占锁保证数据一致性；</li>
+                            <li><strong>零拷贝优化：</strong>使用mmap内存映射和writev分散写技术，减少数据在用户态和内核态之间的拷贝次数，提升静态文件响应性能；</li>
+                            <li><strong>前后端分离架构：</strong>前端使用HTML5+CSS3+JavaScript实现响应式界面，后端提供JSON格式的RESTful API，实时展示三种存储引擎的使用情况；</li>
+                            <li><strong>容器化部署：</strong>编写Dockerfile实现多阶段构建，使用Docker Compose进行容器编排，支持一键部署到云服务器。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">分布式实时消息推送系统</span>
+                            <span class="item-subtitle">后端开发</span>
+                        </div>
+                        <span class="item-date">2024.10-2025.09</span>
+                    </div>
+                    <div class="item-content">
+                        <p><strong>项目描述：</strong>分布式实时消息推送系统通过三级解耦架构，实现Comet层，Job层和Logic层，使用Kafka和gRPC实现服务间通信；将连接管理、业务逻辑与消息推送分离，为需要高并发、低延迟消息推送的场景提供稳定可靠的后端服务；本系统支持房间隔离消息、全局广播等多种消息模式，并提供完整的用户注册、登录认证、消息持久化与历史消息查询等功能。
+                        </p>
+                        <p><strong>部署上线：</strong><a href="http://www.utopianyouth.top" target="_blank"
+                                class="project-link">http://www.utopianyouth.top</a></p>
+                        <p><strong>源代码：</strong><a href="https://github.com/UtopianYouth/myself_chatroom_distribute"
+                                target="_blank"
+                                class="project-link">https://github.com/UtopianYouth/myself_chatroom_distribute</a></p>
+
+                        <p style="margin-top: 15px;"><strong>Comet层：高效管理WebSocket长连接，并将消息实时、可靠地推送到客户端</strong></p>
+                        <ul>
+                            <li><strong>基于muduo网络库的Reactor模型：</strong>通过非阻塞I/O和Reactor事件驱动模式，高效处理并发连接；</li>
+                            <li><strong>连接与会话管理：</strong>通过ConnectionManager管理所有客户端WebSocket连接，使用PubSubService类管理房间与用户的订阅关系，实现高效地广播消息推送；
+                            </li>
+                            <li><strong>gRPC服务端：</strong>将gRPC接口给Job层调用，解析Job层的Protobuf消息，通过订阅管理机制找到对应连接进行消息推送。</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Job层：从Kafka获取推送消息，调用Comet层消息推送逻辑，实现业务逻辑与消息推送解耦</strong></p>
+                        <ul>
+                            <li><strong>Kafka消费者：</strong>使用librdkafka高效从Kafka指定Topic中消费消息，保证消息顺序性和可靠性；</li>
+                            <li><strong>消息路由与转换：</strong>解析Protobuf消息(PushMsg)，根据type和roomId字段，路由到正确的推送逻辑；</li>
+                            <li><strong>gRPC客户端：</strong>维护与Comet层的gRPC连接，根据消息类型，调用不同的gRPC方法，将消息分发到一个或多个Comet服务器上。</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Logic层：处理所有HTTP请求、实现业务逻辑和操作存储层，如用户注册登录、消息存储、房间管理等</strong>
+                        </p>
+                        <ul>
+                            <li><strong>数据持久化：</strong>使用MySQL进行数据持久化存储，Redis缓存session和热点数据；</li>
+                            <li><strong>Kafka生产者：</strong>消息广播业务逻辑完成，构造Protobuf格式推送消息，通过librdkafka异步生产到Kafka中，通知Job层进行推送。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">多任务RHEDD图像分析方法研究</span>
+                            <span class="item-subtitle">客户端开发&图像处理</span>
+                        </div>
+                        <span class="item-date">2024.07-至今</span>
+                    </div>
+                    <div class="item-content">
+                        <p><strong>项目描述：</strong>该项目是硕士毕业论文研究课题，属于正在进行中项目，目前使用了 OpenCV4.8
+                            传统图像处理方法完成了图像对象检测任务，使用QT5完成UI设计。</p>
+                        <p><strong>源代码：</strong><a href="https://github.com/UtopianYouth/RHEEDAnalysis" target="_blank"
+                                class="project-link">https://github.com/UtopianYouth/RHEEDAnalysis</a></p>
+                        <ul>
+                            <li>使用 OpenCV4.8 图像融合、锐化、局部阈值二值化等提取图像中的亮斑（对象），标定亮斑在图像中的位置；</li>
+                            <li>使用 QT5 常见 UI 组件、多线程等完成 UI 界面设计；</li>
+                            <li>使用 Model View View Model(MVVM) 软件架构模式，实现算法层和 UI 层的解耦，极大地提高了软件后续开发、测试和维护的效率；</li>
+                            <li>使用工厂模式对多种算法进行更上层的抽象（多态），实现多种算法的集成。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 专业技能 -->
+            <div class="section">
+                <h2 class="section-title">专业技能</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">熟悉Linux系统编程，如进程管理（fork/exec）、IPC机制、POSIX线程库等，具备多线程同步开发能力；</div>
+                    <div class="skill-item">熟悉Linux网络编程，I/O多路复用机制，能够基于Reactor/Proactor模式构建高并发网络服务；</div>
+                    <div class="skill-item">熟悉OSI七层网络模型、TCP/IP协议栈等；</div>
+                    <div class="skill-item">熟悉数据结构及常见算法，如数组、链表、栈、队列、二叉树、查找与排序、BFS和DFS等；</div>
+                    <div class="skill-item">熟悉MySQL基本操作，表的约束、范式、索引，具备数据库设计能力；</div>
+                    <div class="skill-item">熟悉MVVM软件架构模式，具备使用Cpp和QT5实现业务逻辑与UI层高效解耦的应用开发能力；</div>
+                    <div class="skill-item">了解xv6操作系统源码，通过修改内核代码实现进程调度、IPC和信号量机制，实验均记录在Blog中；</div>
+                    <div class="skill-item">熟悉Git等开发工具，软件设计师（中级）。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
