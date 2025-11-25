@@ -136,6 +136,29 @@ bool HttpKvsConnection::writeJsonResponse(const char* json_content) {
     return true;
 }
 
+// 返回404 JSON错误响应（前后端分离后，非API请求返回此响应）
+bool HttpKvsConnection::writeNotFoundResponse() {
+    const char* error_json =
+        "{\"status\":\"ERROR\","
+        "\"message\":\"API endpoint not found. This is a backend API server. "
+        "Supported endpoints: POST /api/kv, GET /api/stats\"}";
+
+    addStatusLine(404, "Not Found");
+    addResponse("Content-Type: application/json\r\n");
+    addResponse("Access-Control-Allow-Origin: *\r\n");
+    addContentLength(strlen(error_json));
+    addKeepAlive();
+    addBlankLine();
+    addContent(error_json);
+
+    m_iv[0].iov_base = m_write_buf;
+    m_iv[0].iov_len = m_write_index;
+    m_iv_count = 1;
+    bytes_to_send = m_write_index;
+
+    return true;
+}
+
 // 重写process方法
 void HttpKvsConnection::process() {
     // 解析HTTP请求
@@ -149,20 +172,21 @@ void HttpKvsConnection::process() {
 
     bool write_ret = false;
 
+    // 前后端分离后，后端只处理API请求
     if (m_method == POST && m_url != NULL && strcmp(m_url, "/api/kv") == 0) {
-        // POST: /api/kv
+        // POST: /api/kv - KV命令处理
         read_ret = processKvsRequest();
         write_ret = (read_ret == GET_REQUEST);
     }
     else if (m_method == GET && m_url != NULL && strcmp(m_url, "/api/stats") == 0) {
-        // GET: /api/stats
+        // GET: /api/stats - 统计信息
         char stats_json[2048] = { 0 };
         kvs_get_stats(stats_json);
         write_ret = writeJsonResponse(stats_json);
     }
     else {
-        // 静态文件
-        write_ret = processWrite(read_ret);
+        // 其他请求返回404 JSON错误（不再尝试读取静态文件）
+        write_ret = writeNotFoundResponse();
     }
 
     if (!write_ret) {

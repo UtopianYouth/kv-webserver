@@ -22,9 +22,8 @@ RUN apt-get update && apt-get install -y libstdc++6 && rm -rf /var/lib/apt/lists
 
 WORKDIR /app
 
+# 只复制后端可执行文件（不再包含前端资源）
 COPY --from=builder /build/bin/kv-webserver ./bin/
-COPY frontend/ ./frontend/
-COPY resources/ ./resources/
 
 EXPOSE 8080
 

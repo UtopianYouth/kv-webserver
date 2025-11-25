@@ -22,6 +22,9 @@ private:
 
     // 生成JSON响应
     bool writeJsonResponse(const char* json_content);
+
+    // 返回404 JSON错误响应（前后端分离后，非API请求返回此响应）
+    bool writeNotFoundResponse();
 };
 
 #endif

@@ -1,5 +1,5 @@
-// API端点
-const API_BASE = '/api';
+// API端点（部署在 /kv/ 路径下）
+const API_BASE = '/kv/api';
 const KV_ENDPOINT = `${API_BASE}/kv`;
 const STATS_ENDPOINT = `${API_BASE}/stats`;
 
@@ -293,7 +293,7 @@ function showProjectInfo() {
 
 // 查看简历（在当前标签页打开，支持浏览器返回按钮）
 function viewResume() {
-    window.location.href = '/resources/resume.html';
+    window.location.href = '/kv/resources/resume.html';
 }
 
 // 点击弹窗外部区域关闭项目介绍弹窗

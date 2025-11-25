@@ -137,7 +137,7 @@ protected:
     HTTP_CODE parseRequestLine(char* text);       // 解析请求首行
     HTTP_CODE parseRequestHeaders(char* text);    // 解析请求头
     HTTP_CODE parseRequestContent(char* text);    // 解析请求体    
-    HTTP_CODE GetRequestFile();                   // 解析成功 HTTP 请求，将对应的请求资源映射到内存中
+    // HTTP_CODE GetRequestFile();                   // 解析成功 HTTP 请求，将对应的请求资源映射到内存中
     char* getLine() { return this->m_read_buf + this->m_start_line; }  // 获取一行数据
     LINE_STATUS parseLineData();                       // 获取 HTTP 请求的一行数据   
 

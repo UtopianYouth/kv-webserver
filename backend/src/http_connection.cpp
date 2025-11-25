@@ -11,11 +11,9 @@ const char* error_404_form = "The requested file was not found on this server.\n
 const char* error_500_title = "Internal Error";
 const char* error_500_form = "There was an unusual problem serving the requested file.\n";
 
-// kv root
-const char* kv_root = "./frontend";
-
-// resource root
-const char* resource_root = "./resources";
+// 前后端分离
+// const char* kv_root = "./frontend";
+// const char* resource_root = "./resources";
 
 
 // 静态成员变量需要初始化
@@ -339,13 +337,13 @@ HttpConnection::HTTP_CODE HttpConnection::processRead() {
                 return BAD_REQUEST;
             }
             else if (ret == GET_REQUEST) {
-                return this->GetRequestFile();      // 获取一个完整的客户端请求
+                return GET_REQUEST;
             }
             break;
         case CHECK_STATE_CONTENT:
             ret = parseRequestContent(text);
             if (ret == GET_REQUEST) {
-                return this->GetRequestFile();
+                return GET_REQUEST;
             }
             else {
                 line_status = LINE_OPEN;        // 请求体数据没有被完全读入
@@ -356,68 +354,6 @@ HttpConnection::HTTP_CODE HttpConnection::processRead() {
         }
     }
     return NO_REQUEST;
-}
-
-/*
-    当得到一个完整、正确的HTTP请求时，我们就分析目标文件的属性，如
-    果目标文件存在、对所有用户可读，且不是目录，则使用mmap将其映射
-    到内存地址m_file_address处，并告诉调用者获取文件成功
-*/
-HttpConnection::HTTP_CODE HttpConnection::GetRequestFile() {
-    // resources or frontend
-    const char* root_dir = kv_root;
-    const char* url_to_use = this->m_url;
-
-    // "/resources"
-    if (strncmp(this->m_url, "/resources", 10) == 0) {
-        root_dir = resource_root;
-        url_to_use = this->m_url + 10;  // skip "/resources" prefix
-        if (url_to_use[0] == '\0') {
-            url_to_use = "/";
-        }
-    }
-
-    strcpy(this->m_real_file, root_dir);
-    int len = strlen(root_dir);
-
-    // default index.html
-    if (strcmp(url_to_use, "/") == 0) {
-        url_to_use = "/index.html";
-    }
-
-    // 请求资源的路径拼接, FILENAME_LEN-len-1, 多一个减一是因为字符串结束符'\0'
-    strncpy(this->m_real_file + len, url_to_use, FILENAME_LEN - len - 1);
-
-    // 获取m_real_file文件相关的状态信息，存储到struct stat结构体中
-    if (stat(this->m_real_file, &this->m_file_stat) < 0) {
-        return NO_RESOURCE;     // 没有找到请求的文件
-    }
-
-    // 判断访问权限
-    if (!(m_file_stat.st_mode & S_IROTH)) {
-        return FORBIDDEN_REQUEST;
-    }
-
-    // 判断是否是目录
-    if (S_ISDIR(this->m_file_stat.st_mode)) {
-        return BAD_REQUEST;
-    }
-
-    // 以只读方式打开文件
-    int fd = open(this->m_real_file, O_RDONLY);
-    if (fd == -1) {
-        return BAD_REQUEST;
-    }
-
-    // 对待响应的文件创建内存映射
-    this->m_file_address = (char*)mmap(NULL, m_file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (!this->m_file_address) {
-        return BAD_REQUEST;
-    }
-
-    close(fd);
-
-    return FILE_REQUEST;    // 文件请求，获取文件成功
 }
 
 // 释放内存映射
@@ -491,7 +427,7 @@ bool HttpConnection::write() {
     }
 }
 
-// 往写缓冲区中写入待发送的数据，format 参数表示格式化参数列表，和 printf 的第一个参数类似
+// 往写缓冲区中写入待发送的数据
 bool HttpConnection::addResponse(const char* format, ...) {
     if (this->m_write_index >= WRITE_BUFFER_SIZE) {
         return false;       // 写缓冲区满

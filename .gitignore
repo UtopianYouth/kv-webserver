@@ -1,0 +1,30 @@
+# 环境变量文件（包含敏感信息）
+.env
+
+# Docker 相关
+.dockerignore
+
+# 编译产物
+backend/bin/
+backend/*.o
+backend/kv-webserver
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+*.swp
+*~
+
+# IDE 配置
+.vscode/
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# 备份文件
+*.backup
+*.bak

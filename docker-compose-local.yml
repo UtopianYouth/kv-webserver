@@ -1,0 +1,26 @@
+# 生产环境配置 - 使用本地镜像
+# 使用方式: docker-compose -f docker-compose.prod.yml up -d
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: kv-backend:latest
+    container_name: kv-backend
+    expose:
+      - "8080"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 512MB
+        reservations:
+          cpus: '1'
+          memory: 256M
+    healthcheck:
+      test: [ "CMD-SHELL", "pgrep -f kv-webserver || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
